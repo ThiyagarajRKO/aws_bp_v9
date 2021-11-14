@@ -69,3 +69,14 @@ export const DrawerContext = React.createContext({
   onClose: () => null,
   setDrawer: ()=> null
 })
+
+/* 
+Firebase context is for getting a token,deleting a token and requesting permission.
+**/
+export let FirebaseContext = React.createContext({
+  token: "",
+  isTokenFound: false,
+  getToken: () => false,
+  requestPermission: () => false,
+  deleteToken: () => false
+})

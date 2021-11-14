@@ -4,7 +4,6 @@ import {
   StyledEngineProvider,
   createTheme,
   responsiveFontSizes,
-  adaptV4Theme,
 } from "@mui/material";
 
 import { ThemeContext } from "./contexts";
@@ -34,7 +33,7 @@ const AppTheme = (props) => {
     }
 
     //Creating a Theme with json
-    let currentTheme = createTheme(adaptV4Theme(currentThemeJson));
+    let currentTheme = createTheme(currentThemeJson);
 
     //Making theme work with responsive font size
     currentTheme = responsiveFontSizes(currentTheme);

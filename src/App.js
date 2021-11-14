@@ -9,6 +9,7 @@ import AppDrawer from "./App.drawer";
 import { CssBaseline } from "@mui/material";
 import AppDialog from "./App.dialog";
 import AppBackdrop from "./App.backdrop";
+// import AppFirebase from "./App.firebase"; //For Push Notification thing
 
 const App = () => {
   return (
@@ -21,7 +22,9 @@ const App = () => {
               <AppDialog>
                 <AppDrawer>
                   <AppBackdrop>
-                    <RouterApp />
+                    {/* <AppFirebase> */}
+                      <RouterApp />
+                    {/* </AppFirebase> */}
                   </AppBackdrop>
                 </AppDrawer>
               </AppDialog>

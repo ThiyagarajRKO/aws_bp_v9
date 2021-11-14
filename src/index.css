@@ -43,16 +43,6 @@
 
  /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
  @font-face {
-   font-family: 'manage_care_semibold';
-   src        : url('./font/proxima_nova_semibold.woff') format('woff');
- }
-
- @font-face {
-   font-family: 'manage_care_bold';
-   src        : url('./font/proxima_nova_bold.woff') format('woff');
- }
-
- @font-face {
    font-family: 'crayond_bold';
    src        : url('./font/Poppins-Bold.ttf');
  }
@@ -67,31 +57,7 @@
    src        : url('./font/Poppins-Regular.ttf');
  }
 
- .MuiPickersDateRangePickerInput-root {
-   width: 100%;
- }
-
  /* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_9785">Text with this font applied</p> */
- body {
-   font-family: 'crayond_medium' !important;
-   height: 100%;
- }
-
- code {
-   font-family: 'crayond_medium' !important;
- }
-
- textarea:focus,
- input:focus {
-   font-family: 'crayond_medium' !important;
- }
-
- input,
- select,
- textarea {
-   font-family: 'crayond_medium' !important;
- }
-
  html {
    height: 100%;
  }
