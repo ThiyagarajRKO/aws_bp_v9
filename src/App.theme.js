@@ -1,9 +1,11 @@
 import React from "react";
 import {
   ThemeProvider,
-  createMuiTheme,
+  StyledEngineProvider,
+  createTheme,
   responsiveFontSizes,
-} from "@material-ui/core";
+  adaptV4Theme,
+} from "@mui/material";
 
 import { ThemeContext } from "./contexts";
 import { Themes } from "./utils";
@@ -32,7 +34,7 @@ const AppTheme = (props) => {
     }
 
     //Creating a Theme with json
-    let currentTheme = createMuiTheme(currentThemeJson);
+    let currentTheme = createTheme(adaptV4Theme(currentThemeJson));
 
     //Making theme work with responsive font size
     currentTheme = responsiveFontSizes(currentTheme);
@@ -42,7 +44,9 @@ const AppTheme = (props) => {
 
   return (
     <ThemeContext.Provider value={{ ...theme, setTheme }}>
-      <ThemeProvider theme={giveMeTheme()}>{props.children}</ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={giveMeTheme()}>{props.children}</ThemeProvider>
+      </StyledEngineProvider>
     </ThemeContext.Provider>
   );
 };

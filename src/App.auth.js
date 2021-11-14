@@ -1,5 +1,5 @@
 import React from "react";
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress } from "@mui/material";
 import { NetworkCall } from "./networkcall";
 import { LocalStorageKeys, NetWorkCallMethods, refreshCacheAndReload, semverGreaterThan } from "./utils";
 

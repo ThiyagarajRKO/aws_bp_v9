@@ -1,6 +1,6 @@
 import React from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from '@mui/material/Alert';
 
 //MuiAlert component which is shown inside the Snackbar component
 let Alert = (props) => {

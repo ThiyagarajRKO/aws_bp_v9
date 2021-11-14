@@ -1,9 +1,11 @@
 import React from "react";
 import { BackdropContext } from "./contexts";
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
-import { withStyles, Grid } from "@material-ui/core";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import { Grid } from "@mui/material";
+
+import withStyles from '@mui/styles/withStyles';
 
 const styles = (theme) => ({
     backdrop: {
@@ -51,7 +53,7 @@ class AppBackDrop extends React.Component {
             >
                 {this.props.children}
                 <Backdrop className={classes.backdrop} open={open} onClick={this.close}>
-                    <Grid container direction="column" alignItems="center" justify="center">
+                    <Grid container direction="column" alignItems="center" justifyContent="center">
                         <Grid item>
                             <CircularProgress color="inherit" />
                         </Grid>

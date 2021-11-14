@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
 import {
   TopNavBar,
   SideNavBar
@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       paddingLeft: 56
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('md')]: {
       paddingLeft: 0
     }
   },
   topNavbar: {
   },
   sideNavbar: {
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('md')]: {
       display: "none"
     }
   }

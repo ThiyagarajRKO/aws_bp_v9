@@ -1,6 +1,7 @@
 import React from "react";
 import { DrawerContext } from "./contexts";
-import { Drawer, withStyles, Avatar } from "@material-ui/core";
+import { Drawer, Avatar } from "@mui/material";
+import withStyles from '@mui/styles/withStyles';
 import { DrawerProps } from "./utils";
 
 const styles = (theme) => ({
@@ -8,7 +9,7 @@ const styles = (theme) => ({
         maxWidth: 400,
         minWidth: 400,
         background: "#fff",
-        [theme.breakpoints.down("xs")]: {
+        [theme.breakpoints.down('sm')]: {
             maxWidth: 300,
             minWidth: 300,
         },
@@ -26,7 +27,7 @@ const styles = (theme) => ({
             objectFit: "scale-down",
             backgroundColor: "#fff"
         },
-        [theme.breakpoints.down("xs")]: {
+        [theme.breakpoints.down('sm')]: {
             right: "313px",
 
         },
@@ -35,7 +36,7 @@ const styles = (theme) => ({
         maxWidth: 1000,
         minWidth: 1000,
         background: "#fff",
-        [theme.breakpoints.down("xs")]: {
+        [theme.breakpoints.down('sm')]: {
             maxWidth: 300,
             minWidth: 300,
         },
@@ -53,7 +54,7 @@ const styles = (theme) => ({
             objectFit: "scale-down",
             backgroundColor: "#fff"
         },
-        [theme.breakpoints.down("xs")]: {
+        [theme.breakpoints.down('sm')]: {
             right: "313px",
 
         },

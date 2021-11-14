@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Link } from "@material-ui/core";
+import { Grid, Typography, Link } from "@mui/material";
 
 class NotFound extends React.Component {
   render() {
@@ -7,7 +7,7 @@ class NotFound extends React.Component {
       <Grid
         container
         style={{ height: "100vh", width: "100%" }}
-        justify="center"
+        justifyContent="center"
         alignItems="center"
       >
         <Grid item>

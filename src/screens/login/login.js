@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Typography, makeStyles } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { LocalStorageKeys } from '../../utils';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '../../router/routes';

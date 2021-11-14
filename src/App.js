@@ -6,7 +6,7 @@ import AppErrorBoundary from "./App.errorBoundry";
 import RouterApp from "./router";
 import ApolloClient from "./App.gqlclient";
 import AppDrawer from "./App.drawer";
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline } from "@mui/material";
 import AppDialog from "./App.dialog";
 import AppBackdrop from "./App.backdrop";
 

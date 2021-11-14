@@ -1,5 +1,7 @@
 import React from "react";
-import { Grid, Typography, Link, withStyles } from "@material-ui/core";
+import { Grid, Typography, Link } from "@mui/material";
+
+import withStyles from '@mui/styles/withStyles';
 
 const styles = (theme) => ({
   root: {
@@ -35,7 +37,7 @@ class AppErrorBoundary extends React.Component {
           classes={this.props.classes.root}
           id="error_catcher_root"
           className={this.props.classes.root}
-          justify="center"
+          justifyContent="center"
           alignItems="center"
         >
           <Grid item id="error_catcher_item1">
