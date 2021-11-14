@@ -13,7 +13,7 @@ class NotFound extends React.Component {
         <Grid item>
           <Typography variant="h1">404</Typography>
           <Typography variant="h2">Page not Found</Typography>
-          <Link href="/">Go Home</Link>
+          <Link href="/" underline="hover">Go Home</Link>
         </Grid>
       </Grid>
     );

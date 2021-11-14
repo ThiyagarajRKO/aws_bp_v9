@@ -49,7 +49,7 @@ class AppErrorBoundary extends React.Component {
             Oops! Something went wrong.
             </Typography>
 
-            <Link id="error_catcher_link" href="/">
+            <Link id="error_catcher_link" href="/" underline="hover">
               Try again
             </Link>
           </Grid>
