@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from "@mui/styles";
 import { LocalStorageKeys } from '../../utils';
-import { useHistory } from 'react-router-dom';
-import { Routes } from '../../router/routes';
+import { useNavigate } from 'react-router-dom';
+import { AppRoutes } from '../../router/routes';
+import { LoginSuccess } from "../../router/access";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,13 +15,20 @@ const useStyles = makeStyles((theme) => ({
 
 export const Login = props => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const classes = useStyles();
 
     const onLogin = () => {
         localStorage.setItem(LocalStorageKeys.authToken, "authtoken");
-        history.push(Routes.home);
+        navigate(AppRoutes.home);
     }
+
+    React.useEffect(() => {
+        if (localStorage.getItem(LocalStorageKeys.authToken)) {
+            navigate(LoginSuccess())
+        }
+        console.log("here")
+    })
 
     return <div className={classes.root}>
         <Typography variant="body1">

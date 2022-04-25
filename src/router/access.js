@@ -1,4 +1,4 @@
-import { Routes } from "./routes"
+import { AppRoutes } from "./routes"
 import { UserRoles } from "../utils"
 
 /**
@@ -29,7 +29,7 @@ export const Access = (userRole, path) => {
     switch (userRole) {  
         case UserRoles.role:
             return [
-                ...Object.values(Routes)
+                ...Object.values(AppRoutes)
             ].indexOf(path)      
         default:
             return false

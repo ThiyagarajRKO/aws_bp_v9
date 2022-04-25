@@ -1,58 +1,25 @@
 import React from "react";
 import { LinearProgress } from "@mui/material";
-import { NetworkCall } from "./networkcall";
-import { LocalStorageKeys, NetWorkCallMethods, refreshCacheAndReload, semverGreaterThan } from "./utils";
+import { LocalStorageKeys, refreshCacheAndReload, semverGreaterThan, VersionFetchURL } from "./utils";
+// import { useRefreshQuery } from "./redux/services/auth";
 
-class AppAuth extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false
-    };
+export const AppAuth = (props) => {
+
+  // const { isLoading } = useRefreshQuery();
+  const isLoading = false;
+
+  const checkForLatestBuild = () => {
+    fetch(VersionFetchURL).then(res => res.json()).then((_) => {
+      const isVersion = semverGreaterThan(_.version, localStorage.getItem(LocalStorageKeys.version));
+      localStorage.setItem(LocalStorageKeys.version, _.version)
+      if (isVersion) { refreshCacheAndReload() }
+    }, (error) => { console.log('Error at Fetching Latest Version: ', error) })
   }
 
-  componentDidMount() {
-    this.checkForLatestBuild();
-    this.refreshAPI();
-  }
+  React.useEffect(() => { checkForLatestBuild() });
 
-  refreshAPI = () => {
-
-  }
-
-  checkForLatestBuild = () => {
-    NetworkCall(
-      `${window.location.protocol}//${window.location.hostname}${window.location.port ? ":" + window.location.port : ''}/meta.json`,
-      NetWorkCallMethods.get,
-      null,
-      null,
-      false,
-      true).then((_) => {
-        const isVersion = semverGreaterThan(_.data.version, localStorage.getItem(LocalStorageKeys.version));
-        localStorage.setItem(LocalStorageKeys.version, _.data.version)
-        if (isVersion) {
-          refreshCacheAndReload();
-        }
-      }).catch(err => {
-        console.log('err:', err);
-      })
-  }
-
-  render() {
-
-    let {
-      loading
-    } = this.state;
-
-    return (
-      <>
-        {loading ?
-          <LinearProgress />
-          : this.props.children
-        }
-      </>
-    );
-  }
+  return <>
+    {isLoading && <LinearProgress />}
+    {props.children}
+  </>
 }
-
-export default AppAuth;

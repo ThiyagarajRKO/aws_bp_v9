@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  ThemeProvider,
-  StyledEngineProvider,
-  createTheme,
-  responsiveFontSizes,
-} from "@mui/material";
-
+import { ThemeProvider, StyledEngineProvider, createTheme, responsiveFontSizes } from "@mui/material";
 import { ThemeContext } from "./contexts";
 import { Themes } from "./utils";
 
-const AppTheme = (props) => {
+export const AppTheme = (props) => {
   let [theme, setTheme] = React.useState({
     name: Themes.default,
   });
@@ -49,5 +43,3 @@ const AppTheme = (props) => {
     </ThemeContext.Provider>
   );
 };
-
-export default AppTheme;

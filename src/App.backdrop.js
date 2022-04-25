@@ -1,70 +1,36 @@
 import React from "react";
-import { BackdropContext } from "./contexts";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Typography from '@mui/material/Typography';
-import { Grid } from "@mui/material";
+import { Grid, Typography, CircularProgress, Backdrop } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { closeBackdrop } from "./redux/slices/backdrop";
 
-import withStyles from '@mui/styles/withStyles';
-
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
     },
-});
+}));
 
-class AppBackDrop extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            message: '',
-            setBackDrop: () => null
-        };
-    }
+export const AppBackDrop = (props) => {
 
-    close = () => {
-        this.setState({
-            open: false,
-            message: ""
-        });
-    };
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-    set = (props) => {
-        this.setState({ ...props });
-    };
+    const { open, message } = useSelector((state) => state.backdrop);
 
-    render() {
+    const close = () => { dispatch(closeBackdrop()) }
 
-        const { classes } = this.props;
-
-        const {
-            open,
-            message
-        } = this.state;
-
-        return (
-            <BackdropContext.Provider
-                value={{
-                    ...this.state,
-                    setBackDrop: this.set,
-                }}
-            >
-                {this.props.children}
-                <Backdrop className={classes.backdrop} open={open} onClick={this.close}>
-                    <Grid container direction="column" alignItems="center" justifyContent="center">
-                        <Grid item>
-                            <CircularProgress color="inherit" />
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h6" color="inherit" >{message}</Typography>
-                        </Grid>
-                    </Grid>
-                </Backdrop>
-            </BackdropContext.Provider>
-        );
-    }
+    return <>
+        {props.children}
+        <Backdrop className={classes.backdrop} open={open} onClick={close}>
+            <Grid container direction="column" alignItems="center" justifyContent="center">
+                <Grid item>
+                    <CircularProgress color="inherit" />
+                </Grid>
+                <Grid item>
+                    <Typography variant="h6" color="inherit" >{message}</Typography>
+                </Grid>
+            </Grid>
+        </Backdrop>
+    </>;
 }
-
-export default withStyles(styles)(AppBackDrop);

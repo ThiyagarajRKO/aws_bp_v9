@@ -1,15 +1,11 @@
 import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import "firebase/messaging";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage, deleteToken } from "firebase/messaging";
-import "firebase/messaging";
-import dotenv from 'dotenv';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { withAllContexts } from './HOCs';
 import { LocalStorageKeys } from './utils';
 import { FirebaseContext } from './contexts';
-dotenv.config();
-
 
 class AppFireBase extends React.Component {
     constructor(props) {
@@ -135,4 +131,4 @@ class AppFireBase extends React.Component {
     }
 }
 
-export default withAllContexts(AppFireBase);
+export default AppFireBase;

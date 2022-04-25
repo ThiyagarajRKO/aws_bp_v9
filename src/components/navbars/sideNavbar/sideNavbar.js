@@ -1,11 +1,7 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import Paper from '@mui/material/Paper';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { matchPath, useHistory } from 'react-router-dom';
+import { makeStyles } from "@mui/styles";
+import {Paper, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
+import { matchPath, useNavigate, useLocation } from 'react-router-dom';
 
 const drawerWidth = 56;
 
@@ -27,11 +23,12 @@ export const SideNavBar = (props) => {
 
     const classes = useStyles(props);
 
-    const history = useHistory();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const isSelected = (data) => {
         if (data.link) {
-            return matchPath(history.location.pathname, {
+            return matchPath(location.pathname, {
                 path: data.link
             })
         }
@@ -39,7 +36,7 @@ export const SideNavBar = (props) => {
 
     const onListClick = (data) => {
         if (data.link) {
-            history.push(data.link)
+            navigate(data.link)
         }
     }
 

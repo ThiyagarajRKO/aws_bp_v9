@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { makeStyles } from "@mui/styles";
 import { LocalStorageKeys } from '../../utils';
-import { useHistory } from 'react-router-dom';
-import { Routes } from '../../router/routes';
+import { useNavigate } from 'react-router-dom';
+import { AppRoutes } from '../../router/routes';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -14,12 +14,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const Home = props => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const classes = useStyles();
 
     const onLogOut = () => {
         localStorage.removeItem(LocalStorageKeys.authToken);
-        history.push(Routes.home);
+        navigate(AppRoutes.login);
     }
 
     return <div className={classes.root}>

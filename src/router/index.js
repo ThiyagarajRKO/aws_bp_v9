@@ -1,11 +1,10 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
+  BrowserRouter,
+  Routes,
   Route,
-  // Redirect,
 } from "react-router-dom";
-import { Routes } from "./routes";
+import { AppRoutes } from "./routes";
 import PrivateRouter from "./privateRouter";
 
 import {
@@ -15,25 +14,25 @@ import {
 } from './../screens';
 
 const RouterApp = (props) => {
-
+  
   return (
-    <Router>
-      <Switch>
-
-        {/* Login Route */}
-        <Route exact path={Routes.login}>
-          <Login />
-        </Route>
+    <BrowserRouter>
+      <Routes>
 
         {/* Home Route */}
-        <PrivateRouter exact path={Routes.home}>
-          <Home />
-        </PrivateRouter>
+        <Route path={AppRoutes.home} element={
+          <PrivateRouter path={AppRoutes.home}>
+            <Home />
+          </PrivateRouter>
+        } />
+
+        {/* Login Route */}
+        <Route path={AppRoutes.login} element={<Login />} />
 
         {/* For unknow/non-defined path */}
-        <Route exact path="*" component={NotFound} />
-      </Switch>
-    </Router>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

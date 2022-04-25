@@ -1,13 +1,8 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { MeetingRoom } from '@mui/icons-material';
+import { makeStyles } from "@mui/styles";
+import {AppBar, Toolbar, IconButton, Typography, Drawer} from '@mui/material';
+import { MeetingRoom, Menu as MenuIcon } from '@mui/icons-material';
 import { LocalStorageKeys } from '../../../utils';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Drawer } from '@mui/material';
 import { SideNavBar } from '..';
 
 const useStyles = makeStyles((theme) => ({

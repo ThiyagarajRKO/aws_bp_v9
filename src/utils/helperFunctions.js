@@ -54,41 +54,6 @@ export let ConvertHexToRGBA = (hex, opacity) => {
 };
 
 /**
- * The below function will open an document node in a full screen. 
- */
-export let OpenFullScreen = (id) => {
-    let elem = document.getElementById(id);
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.mozRequestFullScreen) {
-        /* Firefox */
-        elem.mozRequestFullScreen();
-    } else if (elem.webkitRequestFullscreen) {
-        /* Chrome, Safari & Opera */
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-        /* IE/Edge */
-        elem.msRequestFullscreen();
-    }
-};
-
-/**
- * The below function will close the full screen of an document
- * node.
- */
-export let CloseFullScreen = (id) => {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-    }
-};
-
-/**
  * The below function will scroll the page to the Top.
  */
 export let ScrollToTop = () => {

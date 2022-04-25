@@ -1,15 +1,10 @@
 import React from "react";
-import { DialogContext } from "./contexts";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import withStyles from '@mui/styles/withStyles';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { closeDialog } from "./redux/slices/dialog";
 
-
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   dialog: {
     '& .MuiDialogActions-root': {
       [theme.breakpoints.down('sm')]: {
@@ -29,76 +24,37 @@ const styles = (theme) => ({
   dialogActions: {
     padding: '0px 24px 16px 24px'
   }
-})
+}));
 
+export const AppDialog = (props) => {
 
-class AppDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      title: "",
-      body: "",
-      positiveBtn: "Ok",
-      negativeBtn: "Cancel",
-      negativeBtnDontShow: false,
-      onOk: () => null,
-      onCancel: this.close,
-    };
-  }
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
-  close = () => {
-    this.setState({
-      open: false,
-    });
-  };
+  const { open, title, body, hideNegativeBtn, hidePositiveBtn,
+    negativeBtn, positiveBtn, onOk } = useSelector((state) => state.dialog);
 
-  set = (props) => {
-    this.setState({ ...props });
-  };
+  const cancelDialog = () => { dispatch(closeDialog()) }
 
-  render() {
-    const { classes } = this.props
-    return (
-      <DialogContext.Provider
-        value={{
-          ...this.state,
-          setDialog: this.set,
-        }}
-      >
-        {this.props.children}
-        <Dialog
-          open={this.state.open}
-          onClose={this.state.onCancel}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          classes={
-            {
-              paper: classes.dialog
-            }
-          }
-        >
-          <DialogTitle id="alert-dialog-title" className={classes.title}>{this.state.title}</DialogTitle>
-          {this.state.body &&
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                {this.state.body}
-              </DialogContentText>
-            </DialogContent>
-          }
-          <DialogActions className={classes.dialogActions}>
-            {!Boolean(this.state?.negativeBtnDontShow) &&
-              <Button onClick={this.state.onCancel} color="primary" variant="outlined">
-                {this.state.negativeBtn}
-              </Button>}
-            <Button onClick={this.state.onOk} color="primary" variant="contained">
-              {this.state.positiveBtn}
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </DialogContext.Provider>
-    );
-  }
+  return <>
+    {props.children}
+    <Dialog open={open} onClose={cancelDialog} classes={{ paper: classes.dialog }}>
+      {/* Dialog Title */}
+      <DialogTitle className={classes.title}>{title}</DialogTitle>
+
+      {/* Dialog Content */}
+      {body && <DialogContent><DialogContentText>{body}</DialogContentText></DialogContent>}
+
+      {/* Ḍialog Action Button */}
+      <DialogActions className={classes.dialogActions}>
+        {!Boolean(hideNegativeBtn) && <Button onClick={cancelDialog} color="primary" variant="outlined">
+          {negativeBtn}
+        </Button>}
+        {!Boolean(hidePositiveBtn) && <Button onClick={onOk} color="primary" variant="contained">
+          {positiveBtn}
+        </Button>}
+      </DialogActions>
+    </Dialog>
+  </>
 }
 
-export default withStyles(styles)(AppDialog);

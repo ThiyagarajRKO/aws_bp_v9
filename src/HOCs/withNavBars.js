@@ -1,9 +1,6 @@
 import React from "react";
-import makeStyles from '@mui/styles/makeStyles';
-import {
-  TopNavBar,
-  SideNavBar
-} from '../components';
+import { makeStyles } from "@mui/styles";
+import { TopNavBar, SideNavBar } from '../components';
 
 const useStyles = makeStyles((theme) => ({
   root: {

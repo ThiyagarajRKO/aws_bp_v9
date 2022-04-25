@@ -1,15 +1,13 @@
 import React from "react";
-import { Grid, Typography, Link } from "@mui/material";
-
 import withStyles from '@mui/styles/withStyles';
+import { Grid, Typography, Link } from "@mui/material";
 
 const styles = (theme) => ({
   root: {
-    height: "100vh",
+    height: "100%",
     width: "100%",
   },
 });
-
 class AppErrorBoundary extends React.Component {
   constructor(props) {
     super(props);

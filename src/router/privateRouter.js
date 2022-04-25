@@ -1,14 +1,14 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
-import { Routes } from "./routes";
+import { Navigate } from "react-router-dom";
+import { AppRoutes } from "./routes";
 import { Access } from "./access";
 import { LocalStorageKeys } from "../utils";
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ path, children, ...rest }) => {
 
-  const isAuthenticated = (router) => {
+  const isAuthenticated = (path) => {
     if (localStorage.getItem(LocalStorageKeys.authToken)) {
-      const _ = Access("role", router?.match?.path);
+      const _ = Access("role", path);
       if (_ >= 0) {
         return true;
       };
@@ -19,19 +19,16 @@ const PrivateRoute = ({ children, ...rest }) => {
   };
 
   return (
-    <Route
-      {...rest}
-      render={(_) =>
-        isAuthenticated(_) ? children : (
-          <Redirect
-            to={{
-              pathname: Routes.login,
-              state: { from: _?.location },
-            }}
+    <>
+      {
+        isAuthenticated(path) ? children : (
+          <Navigate
+            to={AppRoutes.login}
+            state={{ from: path }}
           />
         )
       }
-    />
+    </>
   );
 };
 

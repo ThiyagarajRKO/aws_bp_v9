@@ -1,10 +1,10 @@
 import React from "react";
-import { DrawerContext } from "./contexts";
 import { Drawer, Avatar } from "@mui/material";
-import withStyles from '@mui/styles/withStyles';
-import { DrawerProps } from "./utils";
+import { useSelector } from "react-redux";
+import { makeStyles } from "@mui/styles";
 
-const styles = (theme) => ({
+
+const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 400,
         minWidth: 400,
@@ -59,65 +59,19 @@ const styles = (theme) => ({
 
         },
     },
-});
+}));
 
-class AppDrawer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            direction: DrawerProps.direction.right,
-            variant: DrawerProps.variant.temporary,
-            isLarge: null,
-            component: <></>
-        };
-    }
+export const AppDrawer = (props) => {
+    const close = () => { };
 
-    close = () => {
-        this.setState({
-            ...this.state,
-            open: false,
-            isLarge: null,
-            component: <></>
-        });
-        this.props.onClose_ && this.props.onClose_()
-    };
+    const classes = useStyles()
+    const { direction, variant, open, component, isLarge } = useSelector(state => state.drawer);
 
-    set = (props) => {
-        this.setState({ ...props });
-    };
-
-    render() {
-
-        const { classes, } = this.props;
-        const {
-            direction,
-            variant,
-            open,
-            component,
-            isLarge
-        } = this.state;
-
-        return (
-            <DrawerContext.Provider
-                value={{
-                    ...this.state,
-                    setDrawer: this.set,
-                    onClose: this.close
-                }}
-            >
-                {this.props.children}
-                <Drawer anchor={direction} variant={variant} open={open} onClose={() => this.close()}
-                    ModalProps={{
-                        keepMounted: true
-                    }}
-                >
-                    <Avatar src="/images/close.svg" className={`${classes.large} ${isLarge ? classes.large_extra_large : ""}`} onClick={() => this.close()} />
-                    <div className={`${classes.root} ${isLarge ? classes.root_extra_large : ""}`}>{component}</div>
-                </Drawer>
-            </DrawerContext.Provider>
-        );
-    }
+    return <>
+        {props.children}
+        <Drawer anchor={direction} variant={variant} open={open} onClose={close} ModalProps={{ keepMounted: true }}>
+            <Avatar src="/images/close.svg" className={`${classes.large} ${isLarge ? classes.large_extra_large : ""}`} onClick={close} />
+            <div className={`${classes.root} ${isLarge ? classes.root_extra_large : ""}`}>{component}</div>
+        </Drawer>
+    </>
 }
-
-export default withStyles(styles)(AppDrawer);
