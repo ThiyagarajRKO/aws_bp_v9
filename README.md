@@ -16,7 +16,7 @@ This project was bootstrapped with Create React App and later it was developed i
 
 **Note: All the contexts are available in /src/contexts/index.js, we advised to add all the context here**
 
-- We have setuped the [Apollo Client](https://www.apollographql.com/docs/react/get-started/) along with web socket, so you can directly use the apollo client hook or query component any where in the app. 
+- We have setuped the [Apollo Client](https://www.apollographql.com/docs/react/get-started/) along with web socket, so you can directly use the apollo client hook or query component any where in the app..
 
 - We used [React Router](https://reacttraining.com/react-router/web/guides/quick-start) for routing.  Also a private router is defined in the /src/routers folder. Do use it whenever a protected route is required.
 
