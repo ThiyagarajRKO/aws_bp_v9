@@ -19,13 +19,13 @@ jobs:
         run: |
           # Extract the comment body from the event payload
           comment_body=$(jq -r .comment.body <<< "${{ github.event.client_payload }}")
-          echo "::set-output name=comment_body::$comment_body"
+          echo "comment_body=$comment_body" >> $GITHUB_ENV
 
       - name: Check Comment Content
         id: check_comment_content
         run: |
           # Check if the comment contains "approve" or "approved"
-          if [[ "${{ steps.extract_comment.outputs.comment_body }}" == *approve* || "${{ steps.extract_comment.outputs.comment_body }}" == *approved* ]]; then
+          if [[ "${{ env.comment_body }}" == *approve* || "${{ env.comment_body }}" == *approved* ]]; then
             echo "Comment contains the trigger phrase."
           else
             echo "Comment does not contain the trigger phrase. Exiting..."
@@ -43,7 +43,3 @@ jobs:
       - name: Merge Main to UAT
         if: success() # Only proceed if the comment contains the trigger phrase
         run: |
-          # Merge main branch into uat branch
-          git checkout uat
-          git pull origin main
-          git push origin uat
