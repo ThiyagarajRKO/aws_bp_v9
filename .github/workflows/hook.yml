@@ -53,7 +53,8 @@ jobs:
         run: |
           # Merge main branch into dev branch
           git checkout -b dev origin/dev
-          git pull origin master
+          git reset --hard origin/dev  # Reset local 'dev' to match the remote 'dev'
+          git merge -X theirs master 
           git push origin dev
         env:
           GITHUB_TOKEN: "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"
@@ -63,7 +64,8 @@ jobs:
         run: |
           # Merge main branch into uat branch
           git checkout -b uat origin/uat
-          git pull origin master
+          git reset --hard origin/uat  # Reset local 'uat' to match the remote 'uat'
+          git merge -X theirs master 
           git push origin uat
         env:
           GITHUB_TOKEN: "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"
