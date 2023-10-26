@@ -18,7 +18,7 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
           
       - name: Manual Workflow Approval
-      - uses: trstringer/manual-approval@v1.9.0
+        uses: trstringer/manual-approval@v1.9.0
         with:
           secret: "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"
           approvers: "thiyagarajrko@gmail.com"
