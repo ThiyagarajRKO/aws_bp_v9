@@ -12,13 +12,13 @@ jobs:
     steps:          
       - name: Manual Workflow Approval
         uses: trstringer/manual-approval@v1.9.0
-        with:
-          secret: "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"
-          approvers: thiyagaraj0
-          minimum-approvals: 0
-          issue-title: "Deploying v1.3.5 to prod from staging"
-          issue-body: "Please approve or deny the deployment of version v1.3.5."
-          exclude-workflow-initiator-as-approver: false
-          additional-approved-words: ''
-          additional-denied-words: ''
+        # with:
+        #   secret: "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"
+        #   approvers: thiyagaraj0
+        #   minimum-approvals: 0
+        #   issue-title: "Deploying v1.3.5 to prod from staging"
+        #   issue-body: "Please approve or deny the deployment of version v1.3.5."
+        #   exclude-workflow-initiator-as-approver: false
+        #   additional-approved-words: ''
+        #   additional-denied-words: ''
             
