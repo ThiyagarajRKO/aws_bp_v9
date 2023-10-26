@@ -22,7 +22,8 @@ jobs:
           commenter_email=$(jq -r .comment.user.email <<< "${{ github.event.client_payload }}")
           echo "comment_body=$comment_body" >> $GITHUB_ENV
           echo "commenter_email=$commenter_email" >> $GITHUB_ENV
-          echo "${{ github }}"
+          echo "Body: ${{ github.event.comment.body }}"
+          echo "Title: ${{ github.event.issue.title }}"
 
       - name: Check Comment Content and Email
         id: check_comment_content
