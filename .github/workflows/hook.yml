@@ -14,26 +14,36 @@ jobs:
         id: check_comment
         run: echo "Checking for the specific comment..."
 
-      - name: Extract Comment Body
-        id: extract_comment
+      - name: Extract Comment Data
+        id: extract_comment_data
         run: |
-          # Extract the comment body from the event payload
+          # Extract the comment body and the commenter's email address from the event payload
           comment_body=$(jq -r .comment.body <<< "${{ github.event.client_payload }}")
+          commenter_email=$(jq -r .comment.user.email <<< "${{ github.event.client_payload }}")
           echo "comment_body=$comment_body" >> $GITHUB_ENV
+          echo "commenter_email=$commenter_email" >> $GITHUB_ENV
 
-      - name: Check Comment Content
+      - name: Check Comment Content and Email
         id: check_comment_content
         run: |
-          # Check if the comment contains "approve" or "approved"
+          # Define an array of allowed email addresses
+          allowed_emails=("thiyagaraj0" "example@example.com" "another@example.com")
+
+          # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
           if [[ "${{ env.comment_body }}" == *approve* || "${{ env.comment_body }}" == *approved* ]]; then
-            echo "Comment contains the trigger phrase."
+            if [[ " ${allowed_emails[@]} " =~ " ${env.commenter_email} " ]]; then
+              echo "Comment contains the trigger phrase, and the email is allowed."
+            else
+              echo "Comment contains the trigger phrase, but the email is not allowed. Exiting..."
+              exit 1
+            fi
           else
-            echo "Comment does not contain the trigger phrase. Exiting..."
+            echo "Comment does not meet the criteria. Exiting..."
             exit 1
           fi
 
       - name: Merge Main to Dev
-        if: success() # Only proceed if the comment contains the trigger phrase
+        if: success() # Only proceed if the comment meets the criteria
         run: |
           # Merge main branch into dev branch
           git checkout dev
@@ -41,5 +51,9 @@ jobs:
           git push origin dev
 
       - name: Merge Main to UAT
-        if: success() # Only proceed if the comment contains the trigger phrase
+        if: success() # Only proceed if the comment meets the criteria
         run: |
+          # Merge main branch into uat branch
+          git checkout uat
+          git pull origin main
+          git push origin uat
