@@ -51,13 +51,17 @@ jobs:
         run: |
           # Merge main branch into dev branch
           git checkout dev
-          git pull origin main
+          git pull origin master
           git push origin dev
+        env:
+          GITHUB_TOKEN: "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"
 
       - name: Merge Main to UAT
         if: success() # Only proceed if the comment meets the criteria
         run: |
           # Merge main branch into uat branch
           git checkout uat
-          git pull origin main
+          git pull origin master
           git push origin uat
+        env:
+          GITHUB_TOKEN: "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"
