@@ -54,7 +54,7 @@ jobs:
         run: |
           # Merge main branch into dev branch
           git checkout dev
-          git pull origin master
+          git merge master
           git push origin dev
         env:
           GITHUB_TOKEN: "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"
@@ -64,7 +64,7 @@ jobs:
         run: |
           # Merge main branch into uat branch
           git checkout uat
-          git pull origin master
+          git merge master
           git push origin uat
         env:
           GITHUB_TOKEN: "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"
