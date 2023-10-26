@@ -30,7 +30,7 @@ jobs:
           allowed_comment=("approved" "approve" "yes")
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
-          if [[ ${allowed_comment[@]}" =~ "${{ env.comment_body }}" ]]; then
+          if [[ ${allowed_comment[@]}" =~ "${env.comment_body}" ]]; then
             if [[ "${allowed_emails[@]}" =~ "${env.commenter_email}" ]]; then
               echo "Comment contains the trigger phrase, and the email is allowed."
             else
