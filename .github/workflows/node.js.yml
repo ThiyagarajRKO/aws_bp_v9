@@ -13,7 +13,7 @@ jobs:
       - name: Manual Workflow Approval
         uses: trstringer/manual-approval@v1.9.0
         with:
-          secret: "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"
+          secret: "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"
           approvers: thiyagaraj0
           minimum-approvals: 1
           issue-title: "Deploying v1.3.5 to prod from staging"
