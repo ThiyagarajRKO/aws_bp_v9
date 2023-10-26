@@ -18,10 +18,11 @@ jobs:
         id: check_comment_content
         run: |
           # Define an array of allowed email addresses
-          allowed_emails=("thiyagaraj0" "example@example.com" "another@example.com")
+          allowed_emails=("thiyagaraj0" "thiyagaraj0@gmail.com" "another@example.com")
           allowed_comments=("approved" "approve" "yes")
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
+          echo "${{ github.event.comment.user.login }}"
           if [[ " ${allowed_comments[@]} " =~ " ${{ github.event.comment.body }} " ]]; then
             if [[ " ${allowed_emails[@]} " =~ " ${{ github.event.comment.user.login }} " ]]; then
               echo "Comment contains the trigger phrase, and the email is allowed."
