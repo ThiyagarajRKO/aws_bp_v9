@@ -62,7 +62,7 @@ jobs:
           git merge -X theirs --allow-unrelated-histories master 
           git push origin dev
         env:
-          GITHUB_TOKEN: "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"
+          GITHUB_TOKEN: "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"
 
       - name: Merge Main to UAT
         if: success() # Only proceed if the comment meets the criteria
@@ -73,4 +73,4 @@ jobs:
           git merge -X theirs --allow-unrelated-histories master 
           git push origin uat
         env:
-          GITHUB_TOKEN: "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"
+          GITHUB_TOKEN: "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"
