@@ -10,6 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          
       - name: Manual Workflow Approval
       - uses: trstringer/manual-approval@v1.9.0
+        with:
+          secret: "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"
+          approvers: "thiyagarajrko@gmail.com"
+          minimum-approvals: 1
+          issue-title: "Deploying v1.3.5 to prod from staging"
+          issue-body: "Please approve or deny the deployment of version v1.3.5."
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
             
