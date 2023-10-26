@@ -22,9 +22,20 @@ jobs:
           allowed_comments=("approved" "approve" "yes")
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
-          echo "${{ github.event.comment.user.login }}"
-          if [[ " ${allowed_comments[@]} " =~ " ${{ github.event.comment.body }} " ]]; then
-            if [[ " ${allowed_emails[@]} " =~ " ${{ github.event.comment.user.login }} " ]]; then
+          lowercase_comment=$(echo "${{ github.event.comment.body }}" | awk '{print tolower($0)}' )
+          
+          # Trim spaces using tr
+          trimmed_comment=$(echo "$lowercase_variable" | tr -d ' ')
+
+          # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
+          lowercase_email=$(echo "${{ github.event.comment.body }}" | awk '{print tolower($0)}' )
+          
+          # Trim spaces using tr
+          trimmed_email=$(echo "$lowercase_variable" | tr -d ' ')
+
+          echo $trimmed_comment
+          if [[ " ${allowed_comments[@]} " =~ " $trimmed_comment " ]]; then
+            if [[ " ${allowed_emails[@]} " =~ " $trimmed_email " ]]; then
               echo "Comment contains the trigger phrase, and the email is allowed."
             else
               echo "Comment contains the trigger phrase, but the email is not allowed. Exiting..."
