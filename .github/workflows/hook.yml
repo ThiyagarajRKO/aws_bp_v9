@@ -27,10 +27,11 @@ jobs:
         run: |
           # Define an array of allowed email addresses
           allowed_emails=("thiyagaraj0" "example@example.com" "another@example.com")
+          allowed_comment=("approved" "approve" "yes")
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
-          if [[ "${{ env.comment_body }}" == *approve* || "${{ env.comment_body }}" == *approved* ]]; then
-            if [[ " ${allowed_emails[@]} " =~ " ${env.commenter_email} " ]]; then
+          if [[ ${allowed_comment[@]}" =~ "${{ env.comment_body }}" ]]; then
+            if [[ "${allowed_emails[@]}" =~ "${env.commenter_email}" ]]; then
               echo "Comment contains the trigger phrase, and the email is allowed."
             else
               echo "Comment contains the trigger phrase, but the email is not allowed. Exiting..."
