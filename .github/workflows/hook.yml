@@ -20,6 +20,8 @@ jobs:
           # Extract the comment body and the commenter's email address from the event payload
           comment_body=${{ github.event.comment.body }}
           commenter_email=${{ github.event.comment.user.login }}
+          echo "comment_body=$comment_body" >> $GITHUB_ENV
+          echo "commenter_email=$commenter_email" >> $GITHUB_ENV
 
       - name: Check Comment Content and Email
         id: check_comment_content
