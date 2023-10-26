@@ -13,10 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Debug information
-        run: |
-          git branch -a
-          git remote -v
+      - name: Fetch all branches from the remote
+        run: git fetch --all
 
       - name: Check Comment Content and Email
         id: check_comment_content
@@ -54,7 +52,7 @@ jobs:
         if: success() # Only proceed if the comment meets the criteria
         run: |
           # Merge main branch into dev branch
-          git checkout dev
+          git checkout -b dev origin/dev
           git merge master
           git push origin dev
         env:
@@ -64,7 +62,7 @@ jobs:
         if: success() # Only proceed if the comment meets the criteria
         run: |
           # Merge main branch into uat branch
-          git checkout uat
+          git checkout -b uat origin/uat
           git merge master
           git push origin uat
         env:
