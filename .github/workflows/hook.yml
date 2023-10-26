@@ -20,18 +20,17 @@ jobs:
           # Extract the comment body and the commenter's email address from the event payload
           comment_body=${{ github.event.comment.body }}
           commenter_email=${{ github.event.comment.user.login }}
-          echo "Body: ${{ github.event.comment }}"
 
       - name: Check Comment Content and Email
         id: check_comment_content
         run: |
           # Define an array of allowed email addresses
           allowed_emails=("thiyagaraj0" "example@example.com" "another@example.com")
-          allowed_comment=("approved" "approve" "yes")
+          allowed_comments=("approved" "approve" "yes")
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
-          if [[ ${allowed_comment[@]}" =~ "${env.comment_body}" ]]; then
-            if [[ "${allowed_emails[@]}" =~ "${env.commenter_email}" ]]; then
+          if [[ " ${allowed_comments[@]} " =~ " ${env.comment_body} " ]]; then
+            if [[ " ${allowed_emails[@]} " =~ " ${env.commenter_email} " ]]; then
               echo "Comment contains the trigger phrase, and the email is allowed."
             else
               echo "Comment contains the trigger phrase, but the email is not allowed. Exiting..."
