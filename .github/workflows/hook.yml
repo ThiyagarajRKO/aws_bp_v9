@@ -28,7 +28,7 @@ jobs:
           trimmed_comment=$(echo "$lowercase_comment" | tr -d ' ')
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
-          lowercase_email=$(echo "${{ github.event.comment.body }}" | awk '{print tolower($0)}' )
+          lowercase_email=$(echo "${{ github.event.comment.user.login }}" | awk '{print tolower($0)}' )
           
           # Trim spaces using tr
           trimmed_email=$(echo "$lowercase_email" | tr -d ' ')
