@@ -9,14 +9,7 @@ jobs:
   create-issue:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@v1
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-          
+    steps:          
       - name: Manual Workflow Approval
         uses: trstringer/manual-approval@v1.9.0
         with:
