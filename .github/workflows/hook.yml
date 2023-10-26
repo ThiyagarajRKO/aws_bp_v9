@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: Check for Comment
-        id: check_comment
-        run: echo "Checking for the specific comment..."
+
+      - name: Debug information
+        run: |
+          git branch -a
+          git remote -v
 
       - name: Check Comment Content and Email
         id: check_comment_content
