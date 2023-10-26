@@ -23,15 +23,16 @@ jobs:
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
           lowercase_comment=$(echo "${{ github.event.comment.body }}" | awk '{print tolower($0)}' )
+          echo "lowercase_comment $lowercase_comment"
           
           # Trim spaces using tr
-          trimmed_comment=$(echo "$lowercase_variable" | tr -d ' ')
+          trimmed_comment=$(echo "$lowercase_comment" | tr -d ' ')
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
           lowercase_email=$(echo "${{ github.event.comment.body }}" | awk '{print tolower($0)}' )
           
           # Trim spaces using tr
-          trimmed_email=$(echo "$lowercase_variable" | tr -d ' ')
+          trimmed_email=$(echo "$lowercase_email" | tr -d ' ')
 
           echo ${trimmed_comment}
           if [[ " ${allowed_comments[@]} " =~ " ${trimmed_comment} " ]]; then
