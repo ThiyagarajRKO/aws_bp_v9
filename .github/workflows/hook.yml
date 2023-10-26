@@ -32,8 +32,8 @@ jobs:
 
           # Check if the comment contains "approve" or "approved" and if the commenter's email is in the array of allowed emails
           echo "${env.comment_body}"
-          if [[ " ${allowed_comments[@]} " =~ " ${env.comment_body} " ]]; then
-            if [[ " ${allowed_emails[@]} " =~ " ${env.commenter_email} " ]]; then
+          if [[ " ${allowed_comments[@]} " =~ " ${{ github.event.comment.body }} " ]]; then
+            if [[ " ${allowed_emails[@]} " =~ " ${{ github.event.comment.user.login }} " ]]; then
               echo "Comment contains the trigger phrase, and the email is allowed."
             else
               echo "Comment contains the trigger phrase, but the email is not allowed. Exiting..."
