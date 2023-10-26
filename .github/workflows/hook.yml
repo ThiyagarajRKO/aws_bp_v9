@@ -1,0 +1,49 @@
+name: Auto-Merge on Comment
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  auto_merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for Comment
+        id: check_comment
+        run: echo "Checking for the specific comment..."
+
+      - name: Extract Comment Body
+        id: extract_comment
+        run: |
+          # Extract the comment body from the event payload
+          comment_body=$(jq -r .comment.body <<< "${{ github.event.client_payload }}")
+          echo "::set-output name=comment_body::$comment_body"
+
+      - name: Check Comment Content
+        id: check_comment_content
+        run: |
+          # Check if the comment contains "approve" or "approved"
+          if [[ "${{ steps.extract_comment.outputs.comment_body }}" == *approve* || "${{ steps.extract_comment.outputs.comment_body }}" == *approved* ]]; then
+            echo "Comment contains the trigger phrase."
+          else
+            echo "Comment does not contain the trigger phrase. Exiting..."
+            exit 1
+          fi
+
+      - name: Merge Main to Dev
+        if: success() # Only proceed if the comment contains the trigger phrase
+        run: |
+          # Merge main branch into dev branch
+          git checkout dev
+          git pull origin main
+          git push origin dev
+
+      - name: Merge Main to UAT
+        if: success() # Only proceed if the comment contains the trigger phrase
+        run: |
+          # Merge main branch into uat branch
+          git checkout uat
+          git pull origin main
+          git push origin uat
