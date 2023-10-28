@@ -1,40 +1,22 @@
-name: Create GitHub Issue and Wait for Comment
+name: Execute Script on Master Push
+
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
-  create-issue-and-wait:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Check out code
-      run: |
-        echo "Creating new issue..."
-        cat ISSUE_TEMPLATE.md | sed -e "s/{{title}}/$GITHUB_EVENT_TITLE/" | sed -e "s/{{body}}/$GITHUB_EVENT_BODY/" | github-issue create
-
-    - name: Wait for Comment
-      id: wait_for_comment
-      run: |
-        while true; do
-          comments=$(curl -s -H "Authorization: token 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" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.create_issue.outputs.issue_number }}/comments")
-          if echo "$comments" | jq -e 'any(.[].user.login == "YOUR_USERNAME" and (.body | test("approved?"; "i"))) or (.user.email | in("allowed_email_1", "allowed_email_2"))' > /dev/null; then
-            echo "Comment found."
-            break
-          fi
-          echo "Comment not found. Waiting..."
-          sleep 60
-        done
-
-    - name: Push to Dev and UAT
-      if: success()
-      run: |
-        git checkout -b dev
-        git pull origin main
-        git push origin dev
-
-        git checkout -b uat
-        git pull origin main
-        git push origin uat
+    approve_then_deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Approve and then deploy
+            uses: trstringer/manual-approval@v1
+            with:
+              secret: "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"
+              approvers: Thiyagaraj0,user2,user3
+              minimum-approvals: 1
+              issue-title: "Deploying v1.3.5 to prod from staging"
+              issue-body: "Please approve or deny the deployment of version v1.3.5."
+              exclude-workflow-initiator-as-approver: false
+              additional-approved-words: ''
+              additional-denied-words: ''
