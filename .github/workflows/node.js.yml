@@ -15,7 +15,7 @@ jobs:
       id: create_issue
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: "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"
         script: |
           const { data: issue } = await github.issues.create({
             owner: context.repo.owner,
@@ -28,7 +28,7 @@ jobs:
     - name: Assign Issue to User
       uses: actions/github-script@v6
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: "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"
         script: |
           await github.issues.addAssignees({
             owner: context.repo.owner,
@@ -41,7 +41,7 @@ jobs:
       id: wait_for_comment
       run: |
         while true; do
-          comments=$(curl -s -H "Authorization: token ${{ "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 }}" \
+          comments=$(curl -s -H "Authorization: token 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" \
             "https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.create_issue.outputs.issue_number }}/comments")
           if echo "$comments" | jq -e 'any(.[].user.login == "YOUR_USERNAME" and (.body | test("approved?"; "i"))) or (.user.email | in("allowed_email_1", "allowed_email_2"))' > /dev/null; then
             echo "Comment found."
