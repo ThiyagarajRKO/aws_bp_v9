@@ -1,9 +1,9 @@
 name: Auto-Merge on Comment
 
 on:
-  issue_comment:
-    types:
-      - created
+  push:
+    branches:
+      - master
 
 jobs:
   auto_merge:
