@@ -3,7 +3,7 @@ name: Execute Script on Master Push
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
     approve_then_deploy:
