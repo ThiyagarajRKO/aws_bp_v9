@@ -1,24 +1,63 @@
-name: Create Issue on Push
-
+name: Create GitHub Issue and Wait for Comment
 on:
   push:
     branches:
-      - master  # Replace with the branch you want to trigger the issue creation
+      - main
 
 jobs:
-  create-issue:
+  create-issue-and-wait:
     runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
 
-    steps:          
-      - name: Manual Workflow Approval
-        uses: trstringer/manual-approval@v1.9.0
-        # with:
-        #   secret: "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"
-        #   approvers: thiyagaraj0
-        #   minimum-approvals: 0
-        #   issue-title: "Deploying v1.3.5 to prod from staging"
-        #   issue-body: "Please approve or deny the deployment of version v1.3.5."
-        #   exclude-workflow-initiator-as-approver: false
-        #   additional-approved-words: ''
-        #   additional-denied-words: ''
-            
+    - name: Create GitHub Issue
+      id: create_issue
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: issue } = await github.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Your Issue Title',
+            body: 'Your Issue Description',
+          });
+          console.log(`::set-output name=issue_number::${issue.number}`);
+
+    - name: Assign Issue to User
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          await github.issues.addAssignees({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: ${{ steps.create_issue.outputs.issue_number }},
+            assignees: ['thiyagaraj0']
+          })
+
+    - name: Wait for Comment
+      id: wait_for_comment
+      run: |
+        while true; do
+          comments=$(curl -s -H "Authorization: token ${{ "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 }}" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.create_issue.outputs.issue_number }}/comments")
+          if echo "$comments" | jq -e 'any(.[].user.login == "YOUR_USERNAME" and (.body | test("approved?"; "i"))) or (.user.email | in("allowed_email_1", "allowed_email_2"))' > /dev/null; then
+            echo "Comment found."
+            break
+          fi
+          echo "Comment not found. Waiting..."
+          sleep 60
+        done
+
+    - name: Push to Dev and UAT
+      if: success()
+      run: |
+        git checkout -b dev
+        git pull origin main
+        git push origin dev
+
+        git checkout -b uat
+        git pull origin main
+        git push origin uat
