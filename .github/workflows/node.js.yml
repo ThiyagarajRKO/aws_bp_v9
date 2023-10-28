@@ -8,34 +8,11 @@ jobs:
   create-issue-and-wait:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Check out code
-      uses: actions/checkout@v2
-
-    - name: Create GitHub Issue
-      id: create_issue
-      uses: actions/github-script@v6
-      with:
-        github-token: "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"
-        script: |
-          const { data: issue } = await github.issues.create({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            title: 'Your Issue Title',
-            body: 'Your Issue Description',
-          });
-          console.log(`::set-output name=issue_number::${issue.number}`);
-
-    - name: Assign Issue to User
-      uses: actions/github-script@v6
-      with:
-        github-token: "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"
-        script: |
-          await github.issues.addAssignees({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: ${{ steps.create_issue.outputs.issue_number }},
-            assignees: ['thiyagaraj0']
-          })
+      run: |
+        echo "Creating new issue..."
+        cat ISSUE_TEMPLATE.md | sed -e "s/{{title}}/$GITHUB_EVENT_TITLE/" | sed -e "s/{{body}}/$GITHUB_EVENT_BODY/" | github-issue create
 
     - name: Wait for Comment
       id: wait_for_comment
