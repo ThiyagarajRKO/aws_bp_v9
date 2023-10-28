@@ -2,7 +2,7 @@ name: Create GitHub Issue and Wait for Comment
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   create-issue-and-wait:
